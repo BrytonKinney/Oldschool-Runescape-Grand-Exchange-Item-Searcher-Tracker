@@ -13,6 +13,11 @@ namespace RSWebsite.Services
         private const string _itemUrl = _baseUrl + _itemEndpoint;
         private const string _itemChartUrl = _baseUrl + _itemChartEndpoint;
 
+        /// <summary>
+        /// Gathers api response from osrs api, this bypasses CORS restrictions
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <returns></returns>
         private async Task<string> GetApiResponse(string endpoint)
         {
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(endpoint);
@@ -27,26 +32,27 @@ namespace RSWebsite.Services
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the item chart json
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
         public async Task<string> GetItemChart(string itemId)
         {
             string endpoint = string.Format(_itemChartUrl, itemId);
             return await GetApiResponse(endpoint);
         }
 
+        /// <summary>
+        /// Gets the item info
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
         public async Task<string> GetItem(string itemId)
         {
             string endpoint = string.Format(_itemUrl, itemId);
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(endpoint);
-            using (HttpWebResponse response = (HttpWebResponse)await req.GetResponseAsync())
-            {
-                using (Stream stream = response.GetResponseStream())
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        return await reader.ReadToEndAsync();
-                    }
-                }
-            }
+            return await GetApiResponse(endpoint);
         }
     }
 }

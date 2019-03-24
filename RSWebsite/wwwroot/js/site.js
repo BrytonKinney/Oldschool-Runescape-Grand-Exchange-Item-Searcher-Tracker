@@ -1,11 +1,6 @@
 ﻿
 var ge = new Vue({
     el: '#geSearch',
-    commputed: {
-        itemUrl: function () {
-            return 'http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item=';
-        }
-    },
     data: {
         searchText: '',
         items: [],
