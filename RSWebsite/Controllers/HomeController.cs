@@ -4,15 +4,33 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RSWebsite.Interfaces;
 using RSWebsite.Models;
 
 namespace RSWebsite.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IGrandExchangeService _geService;
+        
+        public HomeController(IGrandExchangeService geSvc)
+        {
+            _geService = geSvc;
+        }
+
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        [Route("item/{id}")]
+        public async Task<JsonResult> GetRsItemPrices(string id)
+        {
+            var itemPrices = await _geService.GetItem(id);
+            var itemChart = await _geService.GetItemChart(id);
+            string mergedResults = $"[{itemPrices}, {itemChart}]";
+            return Json(mergedResults);
         }
 
         public IActionResult About()

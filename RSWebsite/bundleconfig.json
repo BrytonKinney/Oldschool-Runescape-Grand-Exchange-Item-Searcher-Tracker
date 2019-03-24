@@ -1,0 +1,28 @@
+[
+  {
+    "outputFileName": "wwwroot/css/bootstrap.min.css",
+    "inputFiles": [
+      "wwwroot/lib/bower_components/bootstrap/dist/css/bootstrap.css",
+      "wwwroot/lib/bower_components/bootstrap/dist/css/bootstrap-grid.css",
+      "wwwroot/lib/bower_components/bootstrap/dist/css/bootstrap-reboot.css"
+   ]
+  },
+  {
+    "outputFileName": "wwwroot/js/bootstrap.min.js",
+    "inputFiles": [
+      "wwwroot/lib/bower_components/bootstrap/dist/js/bootstrap.js"
+   ]
+  },
+  {
+    "outputFileName": "wwwroot/js/moment.min.js",
+    "inputFiles": [
+      "wwwroot/lib/bower_components/moment/moment.js"
+   ]
+  },
+  {
+    "outputFileName": "wwwroot/js/vue.min.js",
+    "inputFiles": [
+      "wwwroot/js/node_modules/vue/dist/vue.js"
+   ]
+  }
+]

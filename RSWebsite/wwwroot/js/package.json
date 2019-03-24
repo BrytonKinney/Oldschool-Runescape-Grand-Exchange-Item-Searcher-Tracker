@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "chartjs": "0.3.24",
+    "momentjs": "^2.0.0",
+    "vue": "^2.6.8"
+  }
+}
