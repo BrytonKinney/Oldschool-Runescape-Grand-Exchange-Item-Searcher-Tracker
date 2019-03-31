@@ -24,6 +24,7 @@ var ge = new Vue({
             this.items = [];
             var self = this;
             this.showSearch = false;
+            this.isSearching = true;
             fetch("item/" + id, { method: 'GET' }).then(function (resp) {
                 return resp.json();
             }).then(
@@ -64,6 +65,7 @@ var ge = new Vue({
                         data: priceArr
                     });
                     chart.render();
+                    self.isSearching = false;
                 }
             );
         }

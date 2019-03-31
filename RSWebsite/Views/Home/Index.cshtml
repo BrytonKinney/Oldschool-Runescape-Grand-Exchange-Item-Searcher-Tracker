@@ -15,40 +15,50 @@
             </ul>
         </div>
     </form>
-    <div v-if="isSearching">
+    <div class="loading d-flex align-items-center" v-if="isSearching">
         <div class="spinner-border" role="status">
             <span class="sr-only">Loading</span>
         </div>
     </div>
-    <div id="itemPrices" class="container" style="width: 1000px; height: 400px;">
-        <canvas></canvas>
-    </div>
-    <div class="container" v-if="selectedItem">
-        <div class="row">
-            <img :src="selectedItem.icon" />
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                {{ selectedItem.name }}
-            </div>
-            <div class="col-lg-3">
-                {{ selectedItem.description }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                Current Trend
-            </div>
-            <div class="col-lg-3">
-                {{ selectedItem.current.trend}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                Price
-            </div>
-            <div class="col-lg-3">
-                {{selectedItem.current.price}}
+    <div class="container">
+        <div class="card">
+            <div v-show="selectedItem" class="card-body">
+                <div class="card-img-top">
+                    <div id="itemPrices" class="container" v-show="!isSearching" style="width: 1000px; height: 400px;">
+                        <canvas></canvas>
+                    </div>
+                </div>
+                <div class="card-text">
+                    <div class="container" v-if="selectedItem && !isSearching">
+                        <div class="row">
+                            <img :src="selectedItem.icon" />
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <strong>{{ selectedItem.name }}</strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <i>{{ selectedItem.description }}</i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <strong>Current Trend</strong>
+                            </div>
+                            <div class="col-lg-3">
+                                {{ selectedItem.current.trend}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <strong>Price</strong>
+                            </div>
+                            <div class="col-lg-3">
+                                {{selectedItem.current.price}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using RSWebsite.Interfaces;
 using RSWebsite.Models;
 
@@ -11,11 +12,12 @@ namespace RSWebsite.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IGrandExchangeService _geService;
-        
-        public HomeController(IGrandExchangeService geSvc)
+        private readonly IRunescapeService _rsService;
+        private readonly IMemoryCache _memCache;
+        public HomeController(IRunescapeService rsService, IMemoryCache memCache)
         {
-            _geService = geSvc;
+            _rsService = rsService;
+            _memCache = memCache;
         }
 
         public IActionResult Index()
@@ -27,29 +29,11 @@ namespace RSWebsite.Controllers
         [Route("item/{id}")]
         public async Task<JsonResult> GetRsItemPrices(string id)
         {
-            var itemPrices = await _geService.GetItem(id);
-            var itemChart = await _geService.GetItemChart(id);
-            string mergedResults = $"[{itemPrices}, {itemChart}]";
-            return Json(mergedResults);
-        }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            if(_memCache.TryGetValue(id, out var rso))
+                return Json(rso);
+            var result = await _rsService.GetGrandExchangeInfo(id);
+            _memCache.Set(id, result, TimeSpan.FromMinutes(10));
+            return Json(result);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

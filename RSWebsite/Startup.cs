@@ -25,6 +25,7 @@ namespace RSWebsite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -33,6 +34,7 @@ namespace RSWebsite
             });
 
             services.AddScoped<IGrandExchangeService, GrandExchangeService>();
+            services.AddScoped<IRunescapeService, RunescapeService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
